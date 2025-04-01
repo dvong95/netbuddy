@@ -36,13 +36,8 @@ class MainActivity : ComponentActivity() {
                         permission = Manifest.permission.CAMERA
                     ) {
                         App (
-                            navController = navController,
-                            //modifier = Modifier.padding(innerPadding)
+                            navController = navController
                         )
-                        //HomeScreen()
-                        //InstructionsScreen()
-                        //MatchSettingsScreen()
-                        //ResultsScreen(vm = MatchViewModel())
                     }
                 }
             }

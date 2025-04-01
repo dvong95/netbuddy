@@ -9,8 +9,6 @@ fun readInstructions(context: Context, resId: Int) : List<Instruction> {
     var instructions = emptyList<Instruction>()
 
     try {
-        //val file = context.resources.openRawResource(resId)
-        //val reader = file.bufferedReader()
         val text = context.resources.openRawResource(resId).bufferedReader().use { it.readText() }
 
         instructions = Json.decodeFromString<List<Instruction>>(text)

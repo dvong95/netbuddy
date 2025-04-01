@@ -1,15 +1,17 @@
 package com.vongda.netbuddy.data.viewmodels
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
 
-class MatchViewModel {
+class MatchViewModel : ViewModel() {
     var teamOneName by mutableStateOf("")
     var teamTwoName by mutableStateOf("")
 
-    var teamOneScore by mutableStateOf(0)
-    var teamTwoScore by mutableStateOf(0)
+    var teamOneScore by mutableIntStateOf(0)
+    var teamTwoScore by mutableIntStateOf(0)
 
     var overtimeEnabled by mutableStateOf(false)
 
