@@ -137,6 +137,7 @@ class PostTrainerViewModel(application: Application): AndroidViewModel(applicati
 
         gestureJob?.cancel() // Cancel any previous running job
         gestureJob = CoroutineScope(Dispatchers.Default).launch {
+            delay(3000)
             val startTime = System.currentTimeMillis()
 
             while (System.currentTimeMillis() - startTime < gestureTimeout) {
@@ -144,8 +145,8 @@ class PostTrainerViewModel(application: Application): AndroidViewModel(applicati
 
                 if (gesture != null) {
                     detectedGestures.add(gesture)
-                    uiState.value = PoseTrainerUiState("Gesture detected: $gesture")
-                    delay(1000)
+                    uiState.value = PoseTrainerUiState(detectedGestures.firstOrNull().toString())
+                    delay(2000)
                     resetTPose()
                     return@launch
                 }
@@ -183,18 +184,9 @@ class PostTrainerViewModel(application: Application): AndroidViewModel(applicati
         val elbowAngleThreshold = 90.0f // Elbow angle tolerance (degrees)
 
         // **Left Team Score +1** (Left Arm 90° Extended + Elbow 90° Up)
-        val leftExtended = abs(leftElbow.x() - leftShoulder.x()) > horizontalThreshold  // Arm extended horizontally
-        val leftElbowUp = leftElbow.y() < leftShoulder.y() && leftWrist.y() < leftElbow.y() // Elbow above shoulder, wrist above elbow
-
-        // Calculate the angle at the left elbow (shoulder -> elbow -> wrist)
-        val leftShoulderToElbow = floatArrayOf(leftElbow.x() - leftShoulder.x(), leftElbow.y() - leftShoulder.y())
-        val leftElbowToWrist = floatArrayOf(leftWrist.x() - leftElbow.x(), leftWrist.y() - leftElbow.y())
-
-        val leftElbowAngle = calculateAngle(leftShoulderToElbow, leftElbowToWrist)
-
-        if (leftExtended && leftElbowUp && leftElbowAngle >= (90f - elbowAngleThreshold) && leftElbowAngle <= (90f + elbowAngleThreshold)) {
-            return "Left Score +1"
-        }
+        val leftExtended = abs(leftShoulder.y() - leftElbow.y()) < verticalTolerance
+        val leftIsApproximately90Degrees = abs(leftElbow.x() - leftWrist.x()) < 0.1
+                && abs(leftElbow.y() - leftShoulder.y()) < 0.1
 
 //        // **Left Team Score -1** (Left Arm 45° Up)
 //        val leftArmUp = leftWrist.y() < leftShoulder.y() - upwardAngleThreshold &&
@@ -205,12 +197,19 @@ class PostTrainerViewModel(application: Application): AndroidViewModel(applicati
 //        }
 //
 //        // **Right Team Score +1** (Right Arm 90° Extended + Elbow 90° Up)
-//        val rightExtended = abs(rightElbow.x() - rightShoulder.x()) > horizontalThreshold  // Arm extended horizontally
-//        val rightElbowUp = rightElbow.y() < rightShoulder.y() && rightWrist.y() < rightElbow.y() // Elbow above shoulder, wrist above elbow
-//
-//        if (rightExtended && rightElbowUp) {
-//            return "Right Score +1"
-//        }
+        val rightExtended = abs(rightShoulder.y() - rightElbow.y()) < verticalTolerance
+        val rightIsApproximately90Degrees = abs(rightElbow.x() - rightWrist.x()) < 0.1
+                && abs(rightElbow.y() - rightShoulder.y()) < 0.1
+        if (rightExtended && rightIsApproximately90Degrees) {
+            uiState.value = PoseTrainerUiState("Right Score +1")
+            return "Right Score +1"
+        }
+
+        if (leftExtended && leftIsApproximately90Degrees) {
+            uiState.value = PoseTrainerUiState("Left Score +1")
+            return "Left Score +1"
+        }
+
 //
 //        // **Right Team Score -1** (Right Arm 45° Up)
 //        val rightArmUp = rightWrist.y() < rightShoulder.y() - upwardAngleThreshold &&
@@ -223,14 +222,4 @@ class PostTrainerViewModel(application: Application): AndroidViewModel(applicati
         return null
     }
 
-    // Function to calculate the angle between two vectors
-    private fun calculateAngle(vector1: FloatArray, vector2: FloatArray): Float {
-        val dotProduct = vector1[0] * vector2[0] + vector1[1] * vector2[1]
-        val magnitude1 = Math.sqrt((vector1[0] * vector1[0] + vector1[1] * vector1[1]).toDouble()).toFloat()
-        val magnitude2 = Math.sqrt((vector2[0] * vector2[0] + vector2[1] * vector2[1]).toDouble()).toFloat()
-
-        val cosineTheta = dotProduct / (magnitude1 * magnitude2)
-        val angleRad = Math.acos(cosineTheta.toDouble()).toFloat()
-        return Math.toDegrees(angleRad.toDouble()).toFloat()
-    }
 }
