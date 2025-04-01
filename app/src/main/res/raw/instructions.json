@@ -1,0 +1,50 @@
+[
+  {
+    "Title": "Start",
+    "Body": "On the Home page, click the Start button to begin setting up your match.",
+    "ImageStr": "instructionsstart",
+    "ImageDesc": "Start button from Home Screen"
+  },
+  {
+    "Title": "Configure Match Settings",
+    "Body": "On the Settings page you'll be able to set team names and optionally enable overtime (win by 2).",
+    "ImageStr": "instructionsmatchsettings",
+    "ImageDesc": "Match settings form from Settings Screen"
+  },
+  {
+    "Title": "Tripod Setup",
+    "Body": "Set your device on a tripod and align it center with the net with the screen facing towards the court.",
+    "ImageStr": "instructionscameraplacement",
+    "ImageDesc": "Place camera aligned with center of court along the net"
+  },
+  {
+    "Title": "Begin Match",
+    "Body": "Hit the Begin Match button from the Settings page.",
+    "ImageStr": "instructionsbeginmatch",
+    "ImageDesc": "tbd"
+  },
+  {
+    "Title": "T-Pose on Point",
+    "Body": "On gaining a point, T-Pose to have NetBuddy watch for which team increased score.",
+    "ImageStr": "instructionsinitialpose",
+    "ImageDesc": "T-Pose Mascot"
+  },
+  {
+    "Title": "Right Side Scored",
+    "Body": "If the team on the right scored, raise your right arm to signify point increase.",
+    "ImageStr": "instructionsrightpose",
+    "ImageDesc": "Mascot right arm up"
+  },
+  {
+    "Title": "Left Side Scored",
+    "Body": "If the team on the left scored, raise your left arm to signify point increase",
+    "ImageStr": "instructionsleftpose",
+    "ImageDesc": "Mascot left arm up"
+  },
+  {
+    "Title": "GLHF",
+    "Body": "Have a great game!",
+    "ImageStr": "mascot",
+    "ImageDesc": "mascot"
+  }
+]
