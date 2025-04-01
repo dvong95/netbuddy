@@ -2,6 +2,7 @@ package com.vongda.netbuddy
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,7 +22,7 @@ import kotlinx.serialization.Serializable
 
 @Composable
 fun App(navController: NavHostController, modifier: Modifier = Modifier) {
-    var vm = MatchViewModel()
+    val vm: MatchViewModel = viewModel()
     NavHost (
         navController = navController,
         startDestination = HomeScreen,
