@@ -48,13 +48,11 @@ fun PoseCameraScreen(
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
 
-            uiState?.let {
-                Text(
-                    text = "x : ${it.mostRecentPose?.firstOrNull()?.x()}, y : ${it.mostRecentPose?.firstOrNull()?.y()}, z : ${it.mostRecentPose?.firstOrNull()?.z()}",
-                    color = Color.White,
-                    fontSize = 50.sp
-                )
-            }
+            Text(
+                text = uiState.currentPose,
+                color = Color.White,
+                fontSize = 50.sp
+            )
         }
     }
 }

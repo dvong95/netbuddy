@@ -39,7 +39,7 @@ fun CameraPreview(
             cameraSelector,
             previewUseCase,
             imageAnalysisUseCase
-        )
+        ).let { it?.cameraControl?.setLinearZoom(0.0f) }
     }
 
     LaunchedEffect(Unit) {
