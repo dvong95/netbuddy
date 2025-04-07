@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             PoseDetectorTheme {
                 val navController = rememberNavController()
-                val currentBackStackEntry by navController.currentBackStackEntryAsState()
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     WithPermission(

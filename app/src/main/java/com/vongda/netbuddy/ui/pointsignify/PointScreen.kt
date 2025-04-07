@@ -138,10 +138,7 @@ fun PointScreen(
             )
 
             Text("Waiting for Point...", color = Color.White)
-            Text("Pose:" + currentPose.value)
-            Text("Time held: $holdTime")
-            Text("Is valid: $holdValid")
-            Text("is Pose Detected: $isPoseDetected")
+            Text("Waiting for Point...", color = Color.White)
         }
 
         //Invisible Camera View
