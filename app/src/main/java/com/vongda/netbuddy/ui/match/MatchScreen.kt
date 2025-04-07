@@ -54,6 +54,7 @@ fun MatchScreen(
     var holdTime by remember { mutableStateOf(0L) }
     var holdValid by remember { mutableStateOf(false) }
     val holdTarget: Long = 3000L
+
     // State for UI
     val poseData = remember { mutableStateOf<List<NormalizedLandmark>?>(null) }
     val currentPose = poseManager.getCurrentPoseName()
