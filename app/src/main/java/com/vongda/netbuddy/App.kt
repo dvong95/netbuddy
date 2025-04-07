@@ -11,6 +11,7 @@ import com.vongda.netbuddy.ui.home.HomeScreen
 import com.vongda.netbuddy.ui.instructions.InstructionsScreen
 import com.vongda.netbuddy.ui.matchsettings.MatchSettingsScreen
 import com.vongda.netbuddy.ui.match.MatchScreen
+import com.vongda.netbuddy.ui.pointsignify.PointScreen
 import com.vongda.netbuddy.ui.results.ResultsScreen
 import kotlinx.serialization.Serializable
 
@@ -19,6 +20,7 @@ import kotlinx.serialization.Serializable
 @Serializable object MatchSettingsScreen
 @Serializable object MatchScreen
 @Serializable object ResultsScreen
+@Serializable object PointScreen
 
 @Composable
 fun App(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -49,6 +51,16 @@ fun App(navController: NavHostController, modifier: Modifier = Modifier) {
         composable<MatchScreen> {
             MatchScreen(
                 vm,
+                navigateToPointScreen = { navController.navigate(route = PointScreen)},
+                navigateToResults = { navController.navigate(route = ResultsScreen)},
+                navigateToMatchSettings = { navController.navigate(route = MatchSettingsScreen)}
+            )
+        }
+
+        composable<PointScreen> {
+            PointScreen(
+                vm,
+                navigateToMatch = { navController.navigate(route = MatchScreen)},
                 navigateToResults = { navController.navigate(route = ResultsScreen)}
             )
         }
@@ -60,5 +72,7 @@ fun App(navController: NavHostController, modifier: Modifier = Modifier) {
                 navigateToMatch = { navController.navigate(route = MatchScreen)}
             )
         }
+
+
     }
 }
