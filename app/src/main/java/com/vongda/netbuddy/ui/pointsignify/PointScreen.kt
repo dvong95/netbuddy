@@ -89,14 +89,12 @@ fun PointScreen(
                 lastValid = currTime
                 increaseScore(vm, "team1")
 
-                if (isGameOver(vm)) {
-                    Handler(Looper.getMainLooper()).post {
-                        navigateToResults()
-                    }
-                }
-
                 Handler(Looper.getMainLooper()).post {
-                    navigateToMatch()
+                    if (isGameOver(vm)) {
+                        navigateToResults()
+                    } else {
+                        navigateToMatch()
+                    }
                 }
             }
 
@@ -105,15 +103,12 @@ fun PointScreen(
                 lastValid = currTime
                 increaseScore(vm, "team2")
 
-
-                if (isGameOver(vm)) {
-                    Handler(Looper.getMainLooper()).post {
-                        navigateToResults()
-                    }
-                }
-
                 Handler(Looper.getMainLooper()).post {
-                    navigateToMatch()
+                    if (isGameOver(vm)) {
+                        navigateToResults()
+                    } else {
+                        navigateToMatch()
+                    }
                 }
             }
         }
@@ -137,7 +132,6 @@ fun PointScreen(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Text("Waiting for Point...", color = Color.White)
             Text("Waiting for Point...", color = Color.White)
         }
 
