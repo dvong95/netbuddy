@@ -9,19 +9,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
-fun MainButton (text: String, padding: Boolean, onClick: () -> Unit) {
+fun MainButton (text: String, padding: Boolean = false, onClick: () -> Unit) {
     Button(
         onClick = onClick,
-        modifier = if (padding) Modifier.fillMaxWidth().padding(36.dp) else Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(28.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White,
             contentColor = Color.Black
         ),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(4.dp)
     ){
-        Text(text = text)
+        Text(text = text, fontSize = 18.sp, fontWeight = FontWeight.Light, modifier = Modifier.padding(8.dp))
     }
 }
