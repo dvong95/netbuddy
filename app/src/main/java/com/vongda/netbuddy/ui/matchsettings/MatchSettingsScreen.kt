@@ -1,11 +1,9 @@
 package com.vongda.netbuddy.ui.matchsettings
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Switch
@@ -20,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import com.vongda.netbuddy.data.viewmodels.MatchViewModel
 import com.vongda.netbuddy.ui.components.MainButton
 import com.vongda.netbuddy.ui.components.ScreenTitle
+import com.vongda.netbuddy.ui.components.SmallLogoScreen
 import com.vongda.netbuddy.ui.matchsettings.components.TeamNameField
 
 @Composable
@@ -27,21 +26,10 @@ fun MatchSettingsScreen(
     vm: MatchViewModel,
     navigateToMatch: () -> Unit
 ) {
+    SmallLogoScreen {
+        Column (horizontalAlignment = Alignment.CenterHorizontally) {
+            ScreenTitle("Match Settings", 32.sp, Color.White)
 
-
-    Column (
-        modifier = Modifier.fillMaxSize().background(Color.Yellow),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(Modifier.weight(0.5f))
-
-        ScreenTitle("Match Settings", 44.sp, Color.Black)
-
-        Spacer(Modifier.weight(0.5f))
-
-        Column (
-            verticalArrangement = Arrangement.Center,
-        ) {
             Column {
                 TeamNameField (teamNum = "One", teamNameValue = vm.teamOneName, onValueChange = { value -> vm.teamOneName = value})
             }
@@ -49,42 +37,38 @@ fun MatchSettingsScreen(
             Column (modifier = Modifier.padding(top = 16.dp)) {
                 TeamNameField (teamNum = "Two", teamNameValue = vm.teamTwoName, onValueChange = { value -> vm.teamTwoName = value})
             }
-        }
 
-        Row (
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround
-        ){
-            Text("Overtime", color = Color.Black)
-            Switch(
-                checked = vm.overtimeEnabled,
-                onCheckedChange = { vm.overtimeEnabled = it },
-                colors = SwitchDefaults.colors(
-                    uncheckedThumbColor = Color.DarkGray,
-                    uncheckedBorderColor = Color.DarkGray,
-                    uncheckedTrackColor = Color.LightGray,
-                    checkedThumbColor = Color.White,
-                    checkedTrackColor = Color.Green
+            Row (
+                modifier = Modifier.fillMaxWidth().padding(top = 16.dp, start=28.dp, end=28.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text("Overtime", color = Color.White, fontSize = 16.sp)
+                Switch(
+                    checked = vm.overtimeEnabled,
+                    onCheckedChange = { vm.overtimeEnabled = it },
+                    colors = SwitchDefaults.colors(
+                        uncheckedThumbColor = Color.DarkGray,
+                        uncheckedBorderColor = Color.DarkGray,
+                        uncheckedTrackColor = Color.LightGray,
+                        checkedThumbColor = Color.White,
+                        checkedTrackColor = Color.Green
+                    )
                 )
-            )
-        }
-
-        Spacer(Modifier.weight(1f))
-
-        MainButton(
-            "Begin Match",
-            padding = true,
-            onClick = {
-                //Add validation
-                vm.matchWinner = ""
-                vm.teamOneScore = 0
-                vm.teamTwoScore = 0
-                navigateToMatch()
             }
-        )
+            Spacer(Modifier.weight(0.5f))
+            MainButton(
+            "Start New Match",
+                padding = true,
+                onClick = {
+                    vm.matchWinner = ""
+                    vm.teamOneScore = 0
+                    vm.teamTwoScore = 0
+                    navigateToMatch()
+                }
+            )
 
-        Spacer(Modifier.weight(0.5f))
-
+            Spacer(Modifier.weight(0.3f))
+        }
     }
 }
