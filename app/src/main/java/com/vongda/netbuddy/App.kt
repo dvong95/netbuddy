@@ -37,6 +37,7 @@ fun App(navController: NavHostController, modifier: Modifier = Modifier) {
             )
         }
 
+        // Instructions for initial setup
         composable<InstructionsScreen> {
             InstructionsScreen()
         }
