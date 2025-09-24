@@ -37,7 +37,7 @@ fun InstructionsScreen(modifier: Modifier = Modifier) {
             var currentIndex by remember { mutableStateOf(0) }
             val currentInstruction = instructions.getOrNull(currentIndex)
 
-            ScreenTitle("INSTRUCTIONS", 32.sp, Color.White)
+            ScreenTitle("Instructions", 32.sp, Color.White)
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -75,7 +75,8 @@ fun InstructionsScreen(modifier: Modifier = Modifier) {
                 Text(
                     modifier = Modifier.width(300.dp).align(Alignment.CenterHorizontally),
                     text = it.body,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    fontSize = 18.sp
                 )
             }
         }
