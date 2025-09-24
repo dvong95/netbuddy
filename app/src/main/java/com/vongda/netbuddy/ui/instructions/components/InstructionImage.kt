@@ -1,8 +1,8 @@
 package com.vongda.netbuddy.ui.instructions.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -24,9 +24,9 @@ fun InstructionImage(imageStr: String, imageDesc: String) {
     }
 
     Image(
-        modifier = Modifier.fillMaxWidth().height(150.dp),
+        modifier = Modifier.width(300.dp).height(200.dp),
         painter = painterResource(id = resourceId),
         contentDescription = imageDesc,
-        contentScale = ContentScale.Fit
+        contentScale = ContentScale.FillBounds
     )
 }
