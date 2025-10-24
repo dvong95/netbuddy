@@ -1,8 +1,10 @@
 package com.vongda.netbuddy.ui.results
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,8 +18,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.vongda.netbuddy.data.viewmodels.MatchViewModel
+import com.vongda.netbuddy.ui.components.LargeLogoScreen
 import com.vongda.netbuddy.ui.components.MainButton
 import com.vongda.netbuddy.ui.components.ScreenTitle
+import com.vongda.netbuddy.ui.components.SmallLogoScreen
 
 @Composable
 fun ResultsScreen(
@@ -25,58 +29,60 @@ fun ResultsScreen(
     navigateToHome: () -> Unit,
     navigateToMatch: () -> Unit
 ) {
-    Column (modifier = Modifier.fillMaxSize().background(Color.Yellow)) {
-        ScreenTitle("Results", 36.sp, Color.Black)
+    SmallLogoScreen {
+        Column(modifier = Modifier.fillMaxSize()) {
+            ScreenTitle("Results", 32.sp, Color.White)
 
-        Column (
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            Text (
-                "${vm.teamOneScore} - ${vm.teamTwoScore}",
-                color = Color.Black,
-                fontSize = 100.sp
-            )
-            Text (
-                "${vm.matchWinner} Wins the Match!",
-                color = Color.Black,
-                fontSize = 28.sp
-            )
-        }
-
-        Column (modifier = Modifier.fillMaxWidth().padding(top = 12.dp, start = 100.dp, end = 100.dp)) {
-            MainButton(
-                text = "Play Again",
-                padding = false,
-                onClick = {
-                    vm.teamOneScore = 0
-                    vm.teamTwoScore = 0
-                    vm.matchWinner = ""
-
-                    navigateToMatch()
-                }
-            )
-            TextButton(
-                onClick = {
-                    vm.teamOneName = ""
-                    vm.teamTwoName = ""
-                    vm.teamOneScore = 0
-                    vm.teamTwoScore = 0
-                    vm.overtimeEnabled = false
-                    vm.matchWinner = ""
-
-                    navigateToHome()
-                },
-                modifier = Modifier.align(Alignment.End)
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
+                    "${vm.teamOneScore} - ${vm.teamTwoScore}",
+                    color = Color.White,
+                    fontSize = 64.sp
+                )
+                Text(
+                    "${vm.matchWinner} wins the Match!",
+                    color = Color.White,
+                    fontSize = 28.sp
+                )
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy((-44).dp, Alignment.CenterVertically),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                MainButton(
+                    text = "Play Again",
+                    onClick = {
+                        vm.teamOneScore = 0
+                        vm.teamTwoScore = 0
+                        vm.matchWinner = ""
+
+                        navigateToMatch()
+                    }
+                )
+
+                MainButton(
                     text = "Create a New Match",
-                    textAlign = TextAlign.Left,
-                    color = Color.LightGray
+                    onClick = {
+                        vm.teamOneName = ""
+                        vm.teamTwoName = ""
+                        vm.teamOneScore = 0
+                        vm.teamTwoScore = 0
+                        vm.overtimeEnabled = false
+                        vm.matchWinner = ""
+
+                        navigateToHome()
+                    },
+                    secondaryTheme = true
                 )
             }
         }
-
     }
 }
