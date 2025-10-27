@@ -31,7 +31,7 @@ class PoseManager(private val context: Context, private val pointSignify: Boolea
 
     //For detection of pose timing
     private var holdStart: Long = 0
-    private var holdTarget: Long = 3000L
+    private var holdTarget: Long = 1500L
     private var isInPose: Boolean = false
     private var poseDetectedCallback: ((Boolean) -> Unit)? = null
     private var poseHeldTimeCallback: ((Long) -> Unit)? = null
