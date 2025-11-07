@@ -75,34 +75,33 @@ fun PointScreen(
         //Watch for if still in pose and if detected
         poseManager.setOnPoseDetectedListener { detected ->
             isPoseDetected = detected
-            if (!detected || (currentPose.value != leftPose && currentPose.value != rightPose)) {
+            if (!detected || (currentPose.value != leftPose || currentPose.value != rightPose)) {
                 holdValid = false
             }
         }
 
         poseManager.setOnPoseHeldTimeListener { time ->
-//            holdTime = time
-
-            if(!holdValid) return@setOnPoseHeldTimeListener
-
-            // Early return if basic conditions aren't met
-            if (time < holdTarget || !isPoseDetected) return@setOnPoseHeldTimeListener
-
+            holdTime = time
             val currTime = System.currentTimeMillis()
-            if (currTime - lastValid < cooldownTime) return@setOnPoseHeldTimeListener
 
-            // Determine which team scored based on current pose
-            val scoringTeam = when (currentPose.value) {
-                leftPose -> "team1"
-                rightPose -> "team2"
-                else -> null
+            if (time >= holdTarget && isPoseDetected && currentPose.value == leftPose &&  (currTime - lastValid >= cooldownTime)) {
+                holdValid = true
+                lastValid = currTime
+                increaseScore(vm, "team1")
+
+                Handler(Looper.getMainLooper()).post {
+                    if (isGameOver(vm)) {
+                        navigateToResults()
+                    } else {
+                        navigateToMatch()
+                    }
+                }
             }
 
-            // Process score if valid pose detected
-            scoringTeam?.let { team ->
-                holdValid = false
+            if (time >= holdTarget && isPoseDetected && currentPose.value == rightPose && (currTime - lastValid >= cooldownTime)) {
+                holdValid = true
                 lastValid = currTime
-                increaseScore(vm, team)
+                increaseScore(vm, "team2")
 
                 Handler(Looper.getMainLooper()).post {
                     if (isGameOver(vm)) {
