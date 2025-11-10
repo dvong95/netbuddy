@@ -61,12 +61,14 @@ fun ResultsScreen(
                 MainButton(
                     text = "Play Again",
                     onClick = {
+
+
+                        navigateToMatch()
+                        MatchHelper.restartMatch(vm.matchCode)
+
                         vm.teamOneScore = 0
                         vm.teamTwoScore = 0
                         vm.matchWinner = ""
-
-                        MatchHelper.restartMatch(vm.matchCode)
-                        navigateToMatch()
                     }
                 )
 

@@ -15,6 +15,7 @@ import com.vongda.netbuddy.ui.match.MatchScreen
 import com.vongda.netbuddy.ui.pointsignify.PointScreen
 import com.vongda.netbuddy.ui.results.ResultsScreen
 import com.vongda.netbuddy.ui.spectator.JoinMatchScreen
+import com.vongda.netbuddy.ui.spectator.SpectatorMatchEndScreen
 import com.vongda.netbuddy.ui.spectator.SpectatorMatchScreen
 import com.vongda.netbuddy.ui.spectator.SpectatorResultsScreen
 import kotlinx.serialization.Serializable
@@ -28,6 +29,7 @@ import kotlinx.serialization.Serializable
 @Serializable object PointScreen
 @Serializable object SpectatorMatchScreen
 @Serializable object SpectatorResultsScreen
+@Serializable object SpectatorMatchEndScreen
 
 @Composable
 fun App(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -100,7 +102,18 @@ fun App(navController: NavHostController, modifier: Modifier = Modifier) {
         }
 
         composable<SpectatorResultsScreen> {
-            SpectatorResultsScreen()
+            SpectatorResultsScreen(
+                svm,
+                navigateToHome = { navController.navigate(route = HomeScreen)},
+                navigateToSpectatorMatch = { navController.navigate(route = SpectatorMatchScreen)},
+                navigateToSpectatorMatchEnd = { navController.navigate(route = SpectatorMatchEndScreen)},
+            )
+        }
+
+        composable<SpectatorMatchEndScreen> {
+            SpectatorMatchEndScreen(
+                navigateToHome = { navController.navigate(route = HomeScreen)}
+            )
         }
     }
 }

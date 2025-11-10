@@ -106,7 +106,13 @@ object MatchHelper {
 
     fun listenForUpdates(
         roomCode: String,
-        onUpdate: (team1: Map<String, Any>, team2: Map<String, Any>, winner: String, finalScoreReached: Boolean) -> Unit
+        onUpdate: (
+            team1: Map<String, Any>?,
+            team2: Map<String, Any>?,
+            winner: String,
+            finalScoreReached: Boolean,
+            deleted: Boolean
+        ) -> Unit
     ): ListenerRegistration {
         val db = Firebase.firestore
 
@@ -117,8 +123,23 @@ object MatchHelper {
                     val team2 = snapshot.get("team2") as Map<String, Any>
                     val winner = snapshot.get("winner") as String
                     val finalScoreReached = snapshot.get("finalScoreReached") as Boolean
-                    onUpdate(team1, team2, winner, finalScoreReached)
+                    onUpdate(team1, team2, winner, finalScoreReached, false)
+                } else {
+                    onUpdate(null, null, "", false, true)
                 }
+            }
+    }
+
+    fun checkIfMatchExists(roomCode: String, onResult: (exists: Boolean) -> Unit) {
+        val db = Firebase.firestore
+
+        db.collection("games").document(roomCode)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                onResult(snapshot.exists())
+            }
+            .addOnFailureListener {
+                onResult(false)
             }
     }
 

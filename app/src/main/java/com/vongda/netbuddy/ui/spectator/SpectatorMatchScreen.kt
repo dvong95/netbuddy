@@ -35,10 +35,10 @@ fun SpectatorMatchScreen(
     var team1Score by remember { mutableStateOf(0) }
     var team2Score by remember { mutableStateOf(0) }
 
-    listenerRegistration = MatchHelper.listenForUpdates(svm.matchCode) { teamA, teamB, winner, finalScoreReached  ->
-        val teamAName = teamA["name"] as String
+    listenerRegistration = MatchHelper.listenForUpdates(svm.matchCode) { teamA, teamB, winner, finalScoreReached, deleted  ->
+        val teamAName = teamA?.get("name") as String
         val teamAScore = (teamA["score"] as Long).toInt()
-        val teamBName = teamB["name"] as String
+        val teamBName = teamB?.get("name") as String
         val teamBScore = (teamB["score"] as Long).toInt()
 
         team1Name = teamAName
@@ -49,7 +49,10 @@ fun SpectatorMatchScreen(
 
         if (winner.isNotEmpty() && finalScoreReached) {
             navigateToSpectatorResults()
+            listenerRegistration?.remove()
+            listenerRegistration = null
         }
+
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
