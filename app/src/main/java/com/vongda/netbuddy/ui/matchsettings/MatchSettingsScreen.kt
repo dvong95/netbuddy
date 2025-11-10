@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.vongda.netbuddy.data.firebase.MatchHelper
 import com.vongda.netbuddy.data.viewmodels.MatchViewModel
 import com.vongda.netbuddy.ui.components.MainButton
 import com.vongda.netbuddy.ui.components.ScreenTitle
@@ -26,9 +27,11 @@ fun MatchSettingsScreen(
     vm: MatchViewModel,
     navigateToMatch: () -> Unit
 ) {
+    vm.matchCode = generateMatchCode()
+
     SmallLogoScreen {
         Column (horizontalAlignment = Alignment.CenterHorizontally) {
-            ScreenTitle("Match Settings", 32.sp, Color.White)
+            ScreenTitle("Match Code: " + vm.matchCode, 32.sp, Color.White)
 
             Column {
                 TeamNameField (teamNum = "One", teamNameValue = vm.teamOneName, onValueChange = { value -> vm.teamOneName = value})
@@ -64,6 +67,7 @@ fun MatchSettingsScreen(
                     vm.matchWinner = ""
                     vm.teamOneScore = 0
                     vm.teamTwoScore = 0
+                    MatchHelper.createMatch(vm.matchCode, vm.teamOneName, vm.teamTwoName, vm.overtimeEnabled)
                     navigateToMatch()
                 }
             )
