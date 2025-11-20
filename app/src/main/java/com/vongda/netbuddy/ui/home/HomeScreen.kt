@@ -1,5 +1,6 @@
 package com.vongda.netbuddy.ui.home
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,7 +26,8 @@ import com.vongda.netbuddy.ui.components.MainButton
 fun HomeScreen(
     modifier: Modifier = Modifier,
     navigateToMatchSettings: () -> Unit,
-    navigateToInstructions: () -> Unit
+    navigateToInstructions: () -> Unit,
+    navigateToJoinMatch: () -> Unit
 ) {
     LargeLogoScreen (topContent = {
         Box (modifier = Modifier.fillMaxWidth().padding(28.dp)){
@@ -41,13 +43,19 @@ fun HomeScreen(
                 )
             }
         }}) {
-        Column (modifier = Modifier.fillMaxSize()){
+        Column (modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy((-44).dp, Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(modifier = modifier.weight(1f))
             MainButton(
                 text = "Start New Match",
                 onClick = { navigateToMatchSettings() }
             )
-            Spacer(Modifier.weight(0.25f))
+            MainButton(
+                text = "Join Match",
+                onClick = { navigateToJoinMatch() },
+                secondaryTheme = true
+            )
         }
     }
 }

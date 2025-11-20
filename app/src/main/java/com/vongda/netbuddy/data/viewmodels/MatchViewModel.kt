@@ -16,4 +16,6 @@ class MatchViewModel : ViewModel() {
     var overtimeEnabled by mutableStateOf(false)
 
     var matchWinner by mutableStateOf("")
+
+    var matchCode by mutableStateOf("")
 }

@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.vongda.netbuddy.data.firebase.MatchHelper
 import com.vongda.netbuddy.data.viewmodels.MatchViewModel
 import com.vongda.netbuddy.ui.components.LargeLogoScreen
 import com.vongda.netbuddy.ui.components.MainButton
@@ -60,16 +61,19 @@ fun ResultsScreen(
                 MainButton(
                     text = "Play Again",
                     onClick = {
+
+
+                        navigateToMatch()
+                        MatchHelper.restartMatch(vm.matchCode)
+
                         vm.teamOneScore = 0
                         vm.teamTwoScore = 0
                         vm.matchWinner = ""
-
-                        navigateToMatch()
                     }
                 )
 
                 MainButton(
-                    text = "Create a New Match",
+                    text = "End Match",
                     onClick = {
                         vm.teamOneName = ""
                         vm.teamTwoName = ""
@@ -78,6 +82,8 @@ fun ResultsScreen(
                         vm.overtimeEnabled = false
                         vm.matchWinner = ""
 
+                        MatchHelper.endMatchSession(vm.matchCode)
+                        vm.matchCode = ""
                         navigateToHome()
                     },
                     secondaryTheme = true
